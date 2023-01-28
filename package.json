@@ -1,0 +1,15 @@
+{
+  "name": "piedra-papel-tijera",
+  "version": "1",
+  "description": "juego de piedra papel o tijera",
+  "author": "Nahuel Cabral",
+  "license": "MIT",
+  "source": "src/index.html",
+  "scripts": {
+    "dev": "parcel",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  }
+}
