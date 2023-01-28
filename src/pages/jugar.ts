@@ -1,12 +1,13 @@
 import { state } from "../state";
 
-export function home(container) {
+export function jugar(container) {
   const div = document.createElement("div");
   const cS = state.retornarEstado();
 
   div.innerHTML = `
-  <titulo-comp texto="Piedra Papel ó Tijera"></titulo-comp>
-    <boton-comp texto="Empezar"></boton-comp>
+  <h2-comp texto="Presioná jugar
+  y elegí: piedra, papel o tijera antes de que pasen los 3 segundos"></h2-comp>
+    <boton-comp texto="Jugar"></boton-comp>
 
     `;
 
@@ -21,6 +22,10 @@ export function home(container) {
         }`;
   div.appendChild(divEstilo);
   function createTasks(items) {}
+  //   var boton = div.querySelector("boton-comp");
+  //   boton?.addEventListener("click", () => {
+  //     container.goTo("/jugar");
+  //   });
   createTasks(cS);
 
   return div;
