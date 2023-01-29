@@ -31,9 +31,21 @@ export function resultado(contenedor) {
         }
   .iconos{
     width:100%;
-    display:flex;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-items: center;
     justify-content: space-around;
-  }`;
+  }
+  eleccion-comp {
+    width: 50%;
+    transition: all 0.3s;
+    transform-origin: bottom;
+  }
+  eleccion-comp:hover {
+    width: 100%;
+    transform: scale(1,3);
+    
+}`;
   div.appendChild(divEstilo);
   function createTasks(items) {}
   //   var boton = div.querySelector("boton-comp");
