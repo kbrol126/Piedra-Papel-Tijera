@@ -18,10 +18,12 @@ export function eleccionComp() {
       var estiloImg = document.createElement("style");
       estiloImg.textContent = `
         @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,700&display=swap');
-          h1{margin:0}
+        *{box-sizing: border-box}  
+        h1{margin:0}
           .img{
-              width:60px;
-              height:60px;
+              max-width:80px;
+              max-height:80px;
+
              
              
           }        

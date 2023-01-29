@@ -21,7 +21,7 @@ export function h2Comp() {
             font-family: 'Josefin Sans', sans-serif;
             font-style: normal;
             font-weight: 700;
-            font-size: 80px;
+            font-size: 40px;
             line-height: 128%;
             color: rgb(61, 106, 255);
            

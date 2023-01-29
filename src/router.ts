@@ -1,5 +1,6 @@
 import { home } from "./pages/home";
 import { jugar } from "./pages/jugar";
+import { resultado } from "./pages/resultado";
 
 // creo un array de rutas posibles, con rutas y un compenente con una funcion que abre una pagina
 const routes = [
@@ -10,6 +11,10 @@ const routes = [
   {
     ruta: /\/jugar/,
     componente: jugar,
+  },
+  {
+    ruta: /\/resultado/,
+    componente: resultado,
   },
 ];
 export function iniciarRuter(contenedor: Element | null) {

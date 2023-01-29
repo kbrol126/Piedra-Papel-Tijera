@@ -3,9 +3,9 @@ import { state } from "../state";
 export function home(contenedor) {
   const div = document.createElement("div");
   const cS = state.retornarEstado();
-  const imagePiedra = require("url:../piedra.svg");
-  const imagePapel = require("url:../papel.svg");
-  const imageTijera = require("url:../tijera.svg");
+  const imagePiedra = require("url:../imagenes/piedracircular.svg");
+  const imagePapel = require("url:../imagenes/papelcircular.svg");
+  const imageTijera = require("url:../imagenes/tijeracircular.svg");
 
   div.innerHTML = `
     <section class="cuerpo">
