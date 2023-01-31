@@ -1,3 +1,5 @@
+import { state } from "../../state";
+
 export function eleccionComp() {
   class h2Clase extends HTMLElement {
     shadow: ShadowRoot | null;
@@ -7,11 +9,33 @@ export function eleccionComp() {
     }
 
     render() {
+      const imagePiedra = require("url:../../imagenes/manoPiedra.svg");
+      const imagePapel = require("url:../../imagenes/manoPapel.svg");
+      const imageTijera = require("url:../../imagenes/manoTijera.svg");
       var texto: any = this.getAttribute("src");
-      var shadow = this.attachShadow({ mode: "open" });
 
       var eleccionEl = document.createElement("img");
-      eleccionEl.setAttribute("src", texto);
+      if (texto == "piedra") {
+        eleccionEl.setAttribute("src", imagePiedra);
+        this.setAttribute("id", "piedra");
+        this.addEventListener("click", () => {
+          state.jugada("piedra");
+        });
+      }
+      if (texto == "tijera") {
+        eleccionEl.setAttribute("src", imageTijera);
+        this.setAttribute("id", "tijera");
+        this.addEventListener("click", () => {
+          state.jugada("tijera");
+        });
+      }
+      if (texto == "papel") {
+        eleccionEl.setAttribute("src", imagePapel);
+        this.setAttribute("id", "papel");
+        this.addEventListener("click", () => {
+          state.jugada("papel");
+        });
+      }
 
       eleccionEl.setAttribute("class", "img");
 
@@ -29,8 +53,8 @@ export function eleccionComp() {
           }        
           `;
 
-      shadow.appendChild(estiloImg);
-      shadow.appendChild(eleccionEl);
+      this.appendChild(estiloImg);
+      this.appendChild(eleccionEl);
     }
   }
   customElements.define("eleccion-comp", h2Clase);

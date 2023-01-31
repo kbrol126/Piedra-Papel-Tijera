@@ -2,7 +2,7 @@ import { state } from "../state";
 
 export function home(contenedor) {
   const div = document.createElement("div");
-  const cS = state.retornarEstado();
+  const cS = state.getState();
   const imagePiedra = require("url:../imagenes/piedracircular.svg");
   const imagePapel = require("url:../imagenes/papelcircular.svg");
   const imageTijera = require("url:../imagenes/tijeracircular.svg");

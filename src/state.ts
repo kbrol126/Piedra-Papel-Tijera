@@ -1,24 +1,49 @@
 type Eleccion = "piedra" | "papel" | "tijera";
-type Partida = { eleccionDelUsuario: Eleccion; eleccionPC: Eleccion };
 
-const state = {
+let state = {
   data: {
-    partida: {
-      eleccionDelUsuario: "",
-      eleccionPC: "",
-    },
+    partida: [],
+    historial: [{ usuario: 0, maquina: 0 }],
   },
-  historial: [{}],
 
   //metodos//
   iniciarEstado() {
-    const localData = localStorage.getItem("save-state");
-    this.sobreEscribirEstado(JSON.parse(localData!));
+    const localData = localStorage.getItem("guarda-estado");
+    this.setState(JSON.parse(localData!));
   },
 
   jugada(Eleccion: Eleccion) {
-    const ultimoEstado = this.retornarEstado();
-    ultimoEstado.partida.eleccionDelUsuario = Eleccion;
+    const ultimoEstado = this.getState();
+    function nuemeroAleatorio() {
+      return Math.floor(Math.random() * 3) + 1;
+    }
+    let piedra = "piedra";
+    let papel = "papel";
+    let tijera = "tijera";
+    let numero = nuemeroAleatorio();
+    if (numero == 1) {
+      ultimoEstado.partida.push({
+        eleccionDelUsuario: Eleccion,
+        eleccionPC: piedra,
+      });
+      this.ganador(Eleccion, piedra);
+    }
+    if (numero == 2) {
+      ultimoEstado.partida.push({
+        eleccionDelUsuario: Eleccion,
+        eleccionPC: papel,
+      });
+      this.ganador(Eleccion, papel);
+    }
+    if (numero == 3) {
+      ultimoEstado.partida.push({
+        eleccionDelUsuario: Eleccion,
+        eleccionPC: tijera,
+      });
+      this.ganador(Eleccion, tijera);
+    }
+
+    console.log(this.getState());
   },
   ganador(eleccionDelUsuario: Eleccion, eleccionPC: Eleccion) {
     if (
@@ -26,24 +51,37 @@ const state = {
       (eleccionDelUsuario == "piedra" && eleccionPC == "tijera") ||
       (eleccionDelUsuario == "papel" && eleccionPC == "piedra")
     ) {
-      return 0;
+      return this.agregarAlHistorial("gano");
     } else if (
       (eleccionDelUsuario == "papel" && eleccionPC == "tijera") ||
       (eleccionDelUsuario == "tijera" && eleccionPC == "piedra") ||
       (eleccionDelUsuario == "piedra" && eleccionPC == "papel")
     ) {
-      return 1;
+      return this.agregarAlHistorial("perdio");
     } else {
-      return 2;
+      return this.agregarAlHistorial("empato");
     }
   },
-  agregarAlHistorial(partida: Partida) {
-    const ultimoEstado = this.retornarEstado();
-    ultimoEstado.historial(partida);
+  agregarAlHistorial(texto: string) {
+    const ultimoEstado = this.getState();
+
+    if (texto == "gano") {
+      ultimoEstado.historial[0].usuario = ultimoEstado.historial[0].usuario + 1;
+    }
+
+    if (texto == "perdio") {
+      ultimoEstado.historial[0].maquina = ultimoEstado.historial[0].maquina + 1;
+    }
+
+    if (texto == "empato") {
+      ultimoEstado.historial = ultimoEstado.historial;
+    }
   },
-  retornarEstado() {
+  getState(): object {
     return this.data;
   },
-  sobreEscribirEstado(nuevoEstado) {},
+  setState(nuevoEstado) {
+    localStorage.setItem("guarda-estado", JSON.stringify(this.getState()));
+  },
 };
 export { state };

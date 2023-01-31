@@ -1,3 +1,5 @@
+import { state } from "../../state";
+
 export function contadorComp() {
   class contadorClase extends HTMLElement {
     constructor() {
@@ -52,7 +54,7 @@ export function contadorComp() {
             ></path>
           </g>
         </svg>
-        <span class="temporizador etiquetaDelTemporizador">${formatTime(
+        <span class="temporizador etiquetaDelTemporizador" id="tiempo">${formatoDeHora(
           tiempoRestante
         )}</span>
       </div>
@@ -69,25 +71,26 @@ export function contadorComp() {
           tiempoTranscurrido = tiempoTranscurrido += 1;
           tiempoRestante = tiempoLimite - tiempoTranscurrido;
           contadorEl.querySelector(".temporizador")!.innerHTML =
-            formatTime(tiempoRestante);
+            formatoDeHora(tiempoRestante);
           setCircleDasharray();
           colorDelCaminoRestante(tiempoRestante);
 
           if (tiempoRestante === 0) {
             seAcaboElTiempo();
+            contadorEl.innerHTML = `SE ACABO EL TIEMPO`;
           }
         }, 1000);
       }
 
-      function formatTime(time) {
-        const minutes = Math.floor(time / 60);
-        let seconds = time % 60;
+      function formatoDeHora(tiempo) {
+        const minutos = Math.floor(tiempo / 60);
+        let segundos = tiempo % 60;
 
-        if (seconds < 3) {
-          seconds = Number(`0${seconds}`);
+        if (segundos < 3) {
+          segundos = Number(`0${segundos}`);
         }
 
-        return `${minutes}:${seconds}`;
+        return `${minutos}:${segundos}`;
       }
 
       function colorDelCaminoRestante(tiempoRestante) {
@@ -121,14 +124,13 @@ export function contadorComp() {
       .contador {
         font-family: sans-serif;
         display: grid;
-        height: 100vh;
         place-items: center;
       }
       
       .temporizadorBase {
         position: relative;
-        width: 300px;
-        height: 300px;
+        width: 250px;
+        height: 250px;
       }
       
       .svgTemporizador {
@@ -169,8 +171,8 @@ export function contadorComp() {
       
       .etiquetaDelTemporizador {
         position: absolute;
-        width: 300px;
-        height: 300px;
+        width: 250px;
+        height: 250px;
         top: 0;
         display: flex;
         align-items: center;

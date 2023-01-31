@@ -2,7 +2,7 @@ import { state } from "../state";
 
 export function jugar(contenedor) {
   const div = document.createElement("div");
-  const cS = state.retornarEstado();
+  const cS = state.getState();
   const imagePiedra = require("url:../imagenes/piedracircular.svg");
   const imagePapel = require("url:../imagenes/papelcircular.svg");
   const imageTijera = require("url:../imagenes/tijeracircular.svg");
@@ -10,7 +10,7 @@ export function jugar(contenedor) {
   div.innerHTML = `
   <section class="cuerpo">
   <h2-comp class="font" texto="Presioná jugar
-  y elegí: piedra, papel o tijera antes de que pasen los 3 segundos"></h2-comp>
+  y elegí: piedra, papel o tijera antes de que pasen los 5 segundos"></h2-comp>
   <boton-comp texto="Jugar"></boton-comp>
   </section >
     <section class="iconos">
@@ -46,12 +46,11 @@ export function jugar(contenedor) {
   }
   .font{    font-size: 37px;}`;
   div.appendChild(divEstilo);
-  function createTasks(items) {}
+
   var boton = div.querySelector("boton-comp");
   boton?.addEventListener("click", () => {
-    contenedor.irA("/juego");
+    contenedor.irA("/eleccion");
   });
-  createTasks(cS);
 
   return div;
 }
