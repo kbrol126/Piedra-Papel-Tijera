@@ -3,18 +3,20 @@ import { state } from "../state";
 export function resultado(contenedor) {
   const div = document.createElement("div");
   const cS = state.retornarEstado();
-  const imagePiedra = require("url:../imagenes/manoPiedra.svg");
-  const imagePapel = require("url:../imagenes/manoPapel.svg");
-  const imageTijera = require("url:../imagenes/manoTijera.svg");
+  const imagePiedra = require("url:../imagenes/piedracircular.svg");
+  const imagePapel = require("url:../imagenes/papelcircular.svg");
+  const imageTijera = require("url:../imagenes/tijeracircular.svg");
 
   div.innerHTML = `
- 
+    <section class="resultadosPosibles">
+    <resultado-comp src="empate"></resultado-comp>
+    </section> 
     <boton-comp texto="Volver a Jugar"></boton-comp>
     <section class="iconos">
     <eleccion-comp src="${imagePiedra}"></eleccion-comp>
     <eleccion-comp src="${imagePapel}"></eleccion-comp>
     <eleccion-comp src="${imageTijera}"></eleccion-comp>
-    </section>
+  </section>
 
     `;
 
@@ -29,29 +31,18 @@ export function resultado(contenedor) {
     align-items: end;
 
         }
-  .iconos{
-    width:100%;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    justify-items: center;
-    justify-content: space-around;
-  }
-  eleccion-comp {
-    width: 50%;
-    transition: all 0.3s;
-    transform-origin: bottom;
-  }
-  eleccion-comp:hover {
-    width: 100%;
-    transform: scale(1,3);
-    
-}`;
+        .iconos{
+          display:flex;
+          min-width: 250px;
+          justify-content: space-evenly;
+        }`;
   div.appendChild(divEstilo);
   function createTasks(items) {}
-  //   var boton = div.querySelector("boton-comp");
-  //   boton?.addEventListener("click", () => {
-  //     contenedor.goTo("/jugar");
-  //   });
+
+  var boton = div.querySelector("boton-comp");
+  boton?.addEventListener("click", () => {
+    contenedor.irA("/home");
+  });
   createTasks(cS);
 
   return div;

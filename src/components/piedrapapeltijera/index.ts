@@ -21,8 +21,8 @@ export function eleccionComp() {
         *{box-sizing: border-box}  
         h1{margin:0}
           .img{
-              max-width:80px;
-              max-height:80px;
+              max-width:100px;
+              max-height:100px;
 
              
              

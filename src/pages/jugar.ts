@@ -49,7 +49,7 @@ export function jugar(contenedor) {
   function createTasks(items) {}
   var boton = div.querySelector("boton-comp");
   boton?.addEventListener("click", () => {
-    contenedor.irA("/resultado");
+    contenedor.irA("/juego");
   });
   createTasks(cS);
 
