@@ -28,7 +28,7 @@ export function iniciarRuter(contenedor: Element | null) {
   };
 
   if (location.pathname == "/") {
-    irA("/home");
+    irA("/inicio");
   } else {
     redirigir(location.pathname);
   }

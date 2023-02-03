@@ -5,15 +5,19 @@ export function resultadoComp() {
   class ResultadoClass extends HTMLElement {
     constructor() {
       super();
-
+      var usuarioHistorial = this.getAttribute("usuarioH");
+      console.log(usuarioHistorial);
+      var pcHistorial = this.getAttribute("pcH");
       var texto: string | null = this.getAttribute("src");
       function src() {
         if (texto == "ganador") {
           return imagenGanador;
         } else if (texto == "perdedor") {
           return imagenPerdedor;
-        } else {
+        } else if (texto == "empate") {
           return imagenEmpate;
+        } else {
+          return "";
         }
       }
       function textoDelResultado() {
@@ -21,23 +25,25 @@ export function resultadoComp() {
           return "Has Ganado";
         } else if (texto == "perdedor") {
           return "Has Perdido";
-        } else {
+        } else if (texto == "empate") {
           return "Es un Empate";
+        } else {
+          return "No has elegido nada";
         }
       }
       const divEl = document.createElement("div");
       divEl.setAttribute("class", "resultadoComp");
       divEl.innerHTML = `
       <img src="${src()}" class="img"></img>
-      <h1>${textoDelResultado()}</h1>
+      <h1 class="h1">${textoDelResultado()}</h1>
       <div class="contenedorHistorial">
       <div class="historial">
       <h2>Historial</h2>
       <div class="usuario">
-      <h3>Vos: </h3><p>4</p>
+      <h3>Vos: </h3><p>${usuarioHistorial}</p>
       </div>
       <div class="maquina">
-      <h3>Maquina: </h3><p>4</p>
+      <h3>Maquina: </h3><p>${pcHistorial}</p>
       </div>
       </div>
       `;
@@ -51,7 +57,8 @@ export function resultadoComp() {
           align-items: center;
           padding-top:2%;
         }
-        h1{font-family: 'Josefin Sans', sans-serif;}
+        .h1{font-family: 'Josefin Sans', sans-serif; margin-bottom:20%; color:red;
+    }
         h2 {margin:0 auto;
           width:100px;
           height:22px;
@@ -64,6 +71,7 @@ export function resultadoComp() {
       .img{
         max-width:190px;
         max-height:190px;
+        
       }
       .usuario, .maquina{
         display:flex;
@@ -81,6 +89,7 @@ export function resultadoComp() {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+       
       }
       .contenedorHistorial{
         position: relative;

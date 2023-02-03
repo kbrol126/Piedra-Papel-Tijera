@@ -2,14 +2,14 @@ type Eleccion = "piedra" | "papel" | "tijera";
 
 let state = {
   data: {
-    partida: [],
-    historial: [{ usuario: 0, maquina: 0 }],
+    partida: [{ eleccionDelUsuario: "piedra", eleccionPC: "papel" }],
+    historial: [{ usuario: 0, maquina: 0, vencedorUltimaMano: "" }],
   },
+  listener: [],
 
   //metodos//
   iniciarEstado() {
     const localData = localStorage.getItem("guarda-estado");
-    this.setState(JSON.parse(localData!));
   },
 
   jugada(Eleccion: Eleccion) {
@@ -42,8 +42,7 @@ let state = {
       });
       this.ganador(Eleccion, tijera);
     }
-
-    console.log(this.getState());
+    this.setState(ultimoEstado);
   },
   ganador(eleccionDelUsuario: Eleccion, eleccionPC: Eleccion) {
     if (
@@ -67,20 +66,31 @@ let state = {
 
     if (texto == "gano") {
       ultimoEstado.historial[0].usuario = ultimoEstado.historial[0].usuario + 1;
+      ultimoEstado.historial[0].vencedorUltimaMano = "ganador";
     }
 
     if (texto == "perdio") {
       ultimoEstado.historial[0].maquina = ultimoEstado.historial[0].maquina + 1;
+      ultimoEstado.historial[0].vencedorUltimaMano = "perdedor";
     }
 
     if (texto == "empato") {
       ultimoEstado.historial = ultimoEstado.historial;
+      ultimoEstado.historial[0].vencedorUltimaMano = "empate";
+    }
+    if (texto == "") {
+      ultimoEstado.historial = ultimoEstado.historial;
+      ultimoEstado.historial[0].vencedorUltimaMano = "";
     }
   },
-  getState(): object {
+  getState() {
     return this.data;
   },
   setState(nuevoEstado) {
+    this.data = nuevoEstado;
+    for (const cb of this.listener) {
+      cb();
+    }
     localStorage.setItem("guarda-estado", JSON.stringify(this.getState()));
   },
 };
