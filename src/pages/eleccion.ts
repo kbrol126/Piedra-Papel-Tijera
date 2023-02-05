@@ -1,11 +1,6 @@
 import { state } from "../state";
 
 export function eleccion(contenedor) {
-  let ultimoEstado: any = state.getState();
-  let ultimaPartida = ultimoEstado.partida.splice(-1);
-  let usuario = ultimaPartida[0].eleccionDelUsuario;
-  let pc = ultimaPartida[0].eleccionPC;
-
   const div = document.createElement("div");
 
   div.innerHTML = `
@@ -53,7 +48,7 @@ export function eleccion(contenedor) {
   contadorEl.innerHTML = `<div class="app"></div>`;
 
   const FULL_DASH_ARRAY = 283;
-  const UMBRAL_DE_ADVERTENCIA = 3;
+  const UMBRAL_DE_ADVERTENCIA = 4;
   const UMBRAL_DE_ALERTA = 2;
 
   const codigosDeColor = {
@@ -97,40 +92,25 @@ export function eleccion(contenedor) {
     <span class="temporizador etiquetaDelTemporizador" id="tiempo">${formatoDeHora(
       tiempoRestante
     )}</span>
-  </div>
-  `;
+      </div>
+      `;
 
+  div.querySelector("#piedra")?.addEventListener("click", (event) => {
+    contenedor.irA("/animacion");
+    seAcaboElTiempo();
+  });
+  div.querySelector("#papel")?.addEventListener("click", () => {
+    contenedor.irA("/animacion");
+    seAcaboElTiempo();
+  });
+  div.querySelector("#tijera")?.addEventListener("click", () => {
+    contenedor.irA("/animacion");
+    seAcaboElTiempo();
+  });
   IniciarCronometro();
 
   function seAcaboElTiempo() {
     clearInterval(intervaloDeTemporizador);
-  }
-
-  function animacion() {
-    div.innerHTML = `<div class="pc"><eleccion-comp src="${pc}" ></eleccion-comp></div>
-    <div class="usuario"><eleccion-comp src="${usuario}" ></eleccion-comp></div>`;
-    div.setAttribute("class", "animacion");
-    const estiloAnimacion = document.createElement("style");
-    estiloAnimacion.innerText = `.animacion{
-      min-height: 100vh;
-      background:#dbcbff;
-      display: grid;
-      justify-items: center;
-      align-content: space-between;}
-      eleccion-comp {
-        display:grid;
-        transition: all 0.3s;
-        transform-origin: bottom;
-        transform: scale(1,3);
-      }
-      .pc{
-        transform: rotate(180deg);
-      }
-      `;
-    div.appendChild(estiloAnimacion);
-    setTimeout(function () {
-      contenedor.irA("/resultado");
-    }, 2000);
   }
 
   function IniciarCronometro() {
@@ -142,25 +122,13 @@ export function eleccion(contenedor) {
       setCircleDasharray();
       colorDelCaminoRestante(tiempoRestante);
 
-      //////////////////////////////////escuchar eventos click en los iconos///////////////////////////////////
-      div.querySelector("#piedra")?.addEventListener("click", () => {
-        animacion();
-      });
-      div.querySelector("#papel")?.addEventListener("click", () => {
-        animacion();
-      });
-      div.querySelector("#tijera")?.addEventListener("click", () => {
-        animacion();
-      });
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
       if (tiempoRestante === 0) {
+        state.agregarAlHistorial(" ");
         seAcaboElTiempo();
         contenedor.irA("/resultado");
       }
     }, 1000);
   }
-
   function formatoDeHora(tiempo) {
     const minutos = Math.floor(tiempo / 60);
     let segundos = tiempo % 60;
@@ -213,21 +181,21 @@ export function eleccion(contenedor) {
     .svgTemporizador {
       transform: scaleX(-1);
     }
-
+    
     .circuloDelTemporizador {
       fill: none;
       stroke: none;
     }
+    
+    .caminoTranscurrido {
+      stroke-width: 7px;
+      stroke: grey;
+    }
 
-  .caminoTranscurrido {
-    stroke-width: 7px;
-    stroke: grey;
-  }
-
-  .caminoRestante {
-    stroke-width: 7px;
-    stroke-linecap: round;
-    transform: rotate(90deg);
+    .caminoRestante {
+      stroke-width: 7px;
+      stroke-linecap: round;
+      transform: rotate(90deg);
     transform-origin: center;
     transition: 1s linear all;
     fill-rule: nonzero;

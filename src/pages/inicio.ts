@@ -47,6 +47,5 @@ export function home(contenedor) {
     contenedor.irA("/jugar");
   });
   createTasks(cS);
-
   return div;
 }

@@ -14,7 +14,6 @@ tituloComp();
 h2Comp();
 resultadoComp();
 eleccionComp();
-
 eleccionCircularComp();
 const root = document.querySelector(".root");
 iniciarRuter(root);

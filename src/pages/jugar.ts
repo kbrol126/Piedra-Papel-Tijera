@@ -2,8 +2,6 @@ import { state } from "../state";
 
 export function jugar(contenedor) {
   const div = document.createElement("div");
-  const cS = state.getState();
-
   div.innerHTML = `
   <section class="cuerpo">
   <h2-comp class="font" texto="Presioná jugar

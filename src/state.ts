@@ -2,7 +2,7 @@ type Eleccion = "piedra" | "papel" | "tijera";
 
 let state = {
   data: {
-    partida: [{ eleccionDelUsuario: "piedra", eleccionPC: "papel" }],
+    partida: {},
     historial: [{ usuario: 0, maquina: 0, vencedorUltimaMano: "" }],
   },
   listener: [],
@@ -10,9 +10,14 @@ let state = {
   //metodos//
   iniciarEstado() {
     const localData = localStorage.getItem("guarda-estado");
+    if (!localData) {
+      this.setState(this.data);
+    } else {
+      this.setState(JSON.parse(localData!));
+    }
   },
 
-  jugada(Eleccion: Eleccion) {
+  jugada(Eleccion: Eleccion | " ") {
     const ultimoEstado = this.getState();
     function nuemeroAleatorio() {
       return Math.floor(Math.random() * 3) + 1;
@@ -21,26 +26,33 @@ let state = {
     let papel = "papel";
     let tijera = "tijera";
     let numero = nuemeroAleatorio();
+    if (Eleccion == " ") {
+      (ultimoEstado.partida = {
+        eleccionDelUsuario: Eleccion,
+        eleccionPC: Eleccion,
+      }),
+        this.ganador(Eleccion, Eleccion);
+    }
     if (numero == 1) {
-      ultimoEstado.partida.push({
+      (ultimoEstado.partida = {
         eleccionDelUsuario: Eleccion,
         eleccionPC: piedra,
-      });
-      this.ganador(Eleccion, piedra);
+      }),
+        this.ganador(Eleccion, piedra);
     }
     if (numero == 2) {
-      ultimoEstado.partida.push({
+      (ultimoEstado.partida = {
         eleccionDelUsuario: Eleccion,
         eleccionPC: papel,
-      });
-      this.ganador(Eleccion, papel);
+      }),
+        this.ganador(Eleccion, papel);
     }
     if (numero == 3) {
-      ultimoEstado.partida.push({
+      (ultimoEstado.partida = {
         eleccionDelUsuario: Eleccion,
         eleccionPC: tijera,
-      });
-      this.ganador(Eleccion, tijera);
+      }),
+        this.ganador(Eleccion, tijera);
     }
     this.setState(ultimoEstado);
   },
@@ -57,8 +69,10 @@ let state = {
       (eleccionDelUsuario == "piedra" && eleccionPC == "papel")
     ) {
       return this.agregarAlHistorial("perdio");
-    } else {
+    } else if (eleccionDelUsuario == eleccionPC) {
       return this.agregarAlHistorial("empato");
+    } else {
+      this.agregarAlHistorial(" ");
     }
   },
   agregarAlHistorial(texto: string) {
@@ -78,19 +92,22 @@ let state = {
       ultimoEstado.historial = ultimoEstado.historial;
       ultimoEstado.historial[0].vencedorUltimaMano = "empate";
     }
-    if (texto == "") {
+    if (texto == " ") {
       ultimoEstado.historial = ultimoEstado.historial;
-      ultimoEstado.historial[0].vencedorUltimaMano = "";
+      ultimoEstado.historial[0].vencedorUltimaMano = " ";
     }
+    state.setState(ultimoEstado);
   },
   getState() {
     return this.data;
   },
   setState(nuevoEstado) {
+    console.log(this.data);
     this.data = nuevoEstado;
     for (const cb of this.listener) {
       cb();
     }
+
     localStorage.setItem("guarda-estado", JSON.stringify(this.getState()));
   },
 };

@@ -6,14 +6,14 @@ export function resultado(contenedor) {
   let resultado = ultimaPartida[0].vencedorUltimaMano;
   let usuarioHistorial = ultimaPartida[0].usuario;
   let pcHistorial = ultimaPartida[0].maquina;
-  console.log(usuarioHistorial, pcHistorial);
 
   const div = document.createElement("div");
   div.innerHTML = `
     <section class="resultadosPosibles">
     <resultado-comp pcH="${pcHistorial}" usuarioH="${usuarioHistorial}" src="${resultado}"></resultado-comp>
     </section> 
-    <boton-comp texto="Volver a Jugar"></boton-comp>
+    <boton-comp id="volverAJugar" texto="Volver a Jugar"></boton-comp>
+    <boton-comp id="reiniciarHistorial" texto="Reiniciar Historial"></boton-comp>
     <section class="iconos">
     <eleccion-circular src="piedra"></eleccion-comp>
     <eleccion-circular src="papel"></eleccion-comp>
@@ -30,7 +30,7 @@ export function resultado(contenedor) {
     background:#dbcbff;
     display: grid;
     justify-items: center;
-    align-items: end;
+    align-items: center;
 
         }
         .iconos{
@@ -39,11 +39,15 @@ export function resultado(contenedor) {
           justify-content: space-evenly;
         }`;
   div.appendChild(divEstilo);
-  function createTasks(items) {}
 
-  var boton = div.querySelector("boton-comp");
+  var boton = div.querySelector("#volverAJugar");
   boton?.addEventListener("click", () => {
     contenedor.irA("/inicio");
+  });
+  var boton = div.querySelector("#reiniciarHistorial");
+  boton?.addEventListener("click", () => {
+    localStorage.clear();
+    window.location.reload();
   });
 
   return div;

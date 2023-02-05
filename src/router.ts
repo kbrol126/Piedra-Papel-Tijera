@@ -2,6 +2,7 @@ import { home } from "./pages/inicio";
 import { jugar } from "./pages/jugar";
 import { resultado } from "./pages/resultado";
 import { eleccion } from "./pages/eleccion";
+import { animacion } from "./pages/animacion";
 
 // creo un array de rutas posibles, con rutas y un compenente con una funcion que abre una pagina
 const routes = [
@@ -16,6 +17,10 @@ const routes = [
   {
     ruta: /\/eleccion/,
     componente: eleccion,
+  },
+  {
+    ruta: /\/animacion/,
+    componente: animacion,
   },
   {
     ruta: /\/resultado/,

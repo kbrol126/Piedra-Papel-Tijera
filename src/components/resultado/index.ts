@@ -6,7 +6,6 @@ export function resultadoComp() {
     constructor() {
       super();
       var usuarioHistorial = this.getAttribute("usuarioH");
-      console.log(usuarioHistorial);
       var pcHistorial = this.getAttribute("pcH");
       var texto: string | null = this.getAttribute("src");
       function src() {
@@ -28,7 +27,7 @@ export function resultadoComp() {
         } else if (texto == "empate") {
           return "Es un Empate";
         } else {
-          return "No has elegido nada";
+          return "Juga para divertirte, recorda elegir una de las 3 opciones antes de los 5 seg";
         }
       }
       const divEl = document.createElement("div");
@@ -57,7 +56,9 @@ export function resultadoComp() {
           align-items: center;
           padding-top:2%;
         }
-        .h1{font-family: 'Josefin Sans', sans-serif; margin-bottom:20%; color:red;
+        .h1{max-width: 60%;
+          text-align: center;
+          font-family: 'Josefin Sans', sans-serif; margin-bottom:8%; color:red;
     }
         h2 {margin:0 auto;
           width:100px;
