@@ -7,8 +7,8 @@
   "source": "src/index.html",
   "scripts": {
     "dev": "parcel",
-    "build": "parcel build --dist-dir build ",
-    "deploy": "gh-pages -d dist"
+    "build": "parcel build --dist-dir build --public-url /Piedra-Papel-Tijera",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "parcel": "^2.8.3"

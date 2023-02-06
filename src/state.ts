@@ -102,7 +102,6 @@ let state = {
     return this.data;
   },
   setState(nuevoEstado) {
-    console.log(this.data);
     this.data = nuevoEstado;
     for (const cb of this.listener) {
       cb();
