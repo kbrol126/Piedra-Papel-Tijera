@@ -4,11 +4,6 @@ import { resultado } from "./pages/resultado";
 import { eleccion } from "./pages/eleccion";
 import { animacion } from "./pages/animacion";
 const BASE_PATH = "/Piedra-Papel-Tijera";
-
-function isGithubPages() {
-  return location.host.includes("github.io");
-}
-// creo un array de rutas posibles, con rutas y un compenente con una funcion que abre una pagina
 const routes = [
   {
     ruta: /\/inicio/,
@@ -32,20 +27,23 @@ const routes = [
   },
 ];
 export function iniciarRuter(contenedor: Element | null) {
+  function isGithubPages() {
+    return location.host.includes("github.io");
+  }
+
   window.onpopstate = function () {
     redirigir(location.pathname);
   };
 
-  if (location.pathname == "/") {
+  if (location.pathname == "/Piedra-Papel-Tijera/") {
     irA("/inicio");
   } else {
     redirigir(location.pathname);
   }
 
-  redirigir(location.pathname);
-
   function irA(path) {
     const completePath = isGithubPages() ? BASE_PATH + path : path;
+
     history.pushState({}, "", completePath);
     redirigir(completePath);
   }
@@ -53,6 +51,7 @@ export function iniciarRuter(contenedor: Element | null) {
     const newRoute = isGithubPages() ? route.replace(BASE_PATH, "") : route;
     for (const r of routes) {
       if (r.ruta.test(newRoute)) {
+        console.log(newRoute);
         const el: any = r.componente({ irA: irA });
         if (contenedor?.firstChild) {
           contenedor.firstChild.remove();

@@ -42,12 +42,12 @@ export function resultado(contenedor) {
 
   var boton = div.querySelector("#volverAJugar");
   boton?.addEventListener("click", () => {
-    contenedor.irA("/inicio");
+    contenedor.irA("/Piedra-Papel-Tijera/");
   });
   var boton = div.querySelector("#reiniciarHistorial");
   boton?.addEventListener("click", () => {
     localStorage.clear();
-    window.location.reload();
+    contenedor.irA("/Piedra-Papel-Tijera/");
   });
 
   return div;
